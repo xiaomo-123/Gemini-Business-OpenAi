@@ -1,0 +1,5 @@
+credentials:
+  account: 'admin'
+  password: '123456'
+defaultDomain: '@artpayaws.site'
+emailApiUrl: 'https://artpayaws.site'

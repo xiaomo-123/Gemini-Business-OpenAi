@@ -1,0 +1,15 @@
+1、在 util/config.js 中已经定义了一个 emailApiUrl 配置项，
+它从 temp-mail.yaml 文件中读取，默认值为 "https://mail.sohua.cc"：
+
+2、所有这些文件都已经导入了 config 模块，
+可以通过 config.getCredentials() 获取配置信息，包括 emailApiUrl。
+
+3、根据需要拼接相应的 API 路径，如 '/api/login'、'/api/account/add' 等
+
+util/auth.js (LOGIN_URL)
+util/mail/createAccount.js (CREATE_ACCOUNT_URL)
+util/mail/deleteAccount.js (DELETE_ACCOUNT_URL)
+util/mail/getVerificationCode.js (EMAIL_LIST_URL)
+util/mail/tempMail.js (ACCOUNT_LIST_URL)
+
+，使用 config.getCredentials().emailApiUrl 替换硬编码的 'https://mail.sohua.cc',
