@@ -62,8 +62,8 @@ function resolveLoginEmail(account, defaultDomain) {
 function getCredentials() {
   const config = loadRawConfig();
   const { account, password } = config.credentials;
-  const defaultDomain = config.defaultDomain || "@sohua.cc";
-  const emailApiUrl = config.emailApiUrl || "https://mail.sohua.cc";
+  const defaultDomain = config.defaultDomain ;
+  const emailApiUrl = config.emailApiUrl ;
 
   if (!account || !password) {
     throw new Error("请在 temp-mail.yaml 中填写 account 与 password 字段后再运行");

@@ -93,7 +93,7 @@ async function selectBusinessAccounts(rl) {
         
         // 读取 gemini-mail.yaml 的配置
         const geminiConfig = loadGeminiMailConfig();
-        const poolApiUrl = geminiConfig.poolApiUrl || 'https://mgs.ccode.vip';
+        const poolApiUrl = geminiConfig.poolApiUrl;
         const password = geminiConfig.password || '';
         
         console.log('\n可用的子号列表：');

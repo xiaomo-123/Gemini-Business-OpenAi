@@ -4,8 +4,21 @@ const fs = require('fs');
 const path = require('path');
 
 // Gemini Pool 平台配置
-const GEMINI_POOL_URL = 'https://mgs.ccode.vip';
 const GEMINI_MAIL_FILE = path.join(__dirname, '../../gemini-mail.yaml');
+
+/**
+ * 从 gemini-mail.yaml 读取 poolApiUrl
+ */
+function getPoolApiUrl() {
+    try {
+        const fileContent = fs.readFileSync(GEMINI_MAIL_FILE, 'utf8');
+        const data = yaml.load(fileContent);
+        return data.poolApiUrl;
+    } catch (error) {
+        console.error('读取 poolApiUrl 失败:', error.message);
+        throw error;
+    }
+}
 
 /**
  * 登录 Gemini Pool 平台获取 x-admin-token
@@ -13,7 +26,8 @@ const GEMINI_MAIL_FILE = path.join(__dirname, '../../gemini-mail.yaml');
 async function loginGeminiPool(password) {
     try {
         console.log('正在登录 Gemini Pool 平台...');
-        const response = await axios.post(`${GEMINI_POOL_URL}/api/auth/login`, {
+        const poolApiUrl = getPoolApiUrl();
+        const response = await axios.post(`${poolApiUrl}/api/auth/login`, {
             password: password
         });
 
@@ -53,7 +67,8 @@ function loadAccountsFromYaml() {
 async function getPoolAccounts(adminToken) {
     try {
         console.log('\n正在获取平台账户列表...');
-        const response = await axios.get(`${GEMINI_POOL_URL}/api/accounts`, {
+        const poolApiUrl = getPoolApiUrl();
+        const response = await axios.get(`${poolApiUrl}/api/accounts`, {
             headers: {
                 'x-admin-token': adminToken
             }
@@ -80,7 +95,8 @@ async function getPoolAccounts(adminToken) {
  */
 async function testAccount(accountId, adminToken) {
     try {
-        const response = await axios.get(`${GEMINI_POOL_URL}/api/accounts/${accountId}/test`, {
+        const poolApiUrl = getPoolApiUrl();
+        const response = await axios.get(`${poolApiUrl}/api/accounts/${accountId}/test`, {
             headers: {
                 'x-admin-token': adminToken
             }
@@ -98,7 +114,8 @@ async function testAccount(accountId, adminToken) {
  */
 async function deleteAccount(accountId, adminToken) {
     try {
-        const response = await axios.delete(`${GEMINI_POOL_URL}/api/accounts/${accountId}`, {
+        const poolApiUrl = getPoolApiUrl();
+        const response = await axios.delete(`${poolApiUrl}/api/accounts/${accountId}`, {
             headers: {
                 'x-admin-token': adminToken
             }
@@ -160,7 +177,8 @@ async function deleteAllAccounts(adminToken) {
  */
 async function addAccount(accountData, adminToken) {
     try {
-        const response = await axios.post(`${GEMINI_POOL_URL}/api/accounts`, {
+        const poolApiUrl = getPoolApiUrl();
+        const response = await axios.post(`${poolApiUrl}/api/accounts`, {
             team_id: accountData.team_id,
             secure_c_ses: accountData.secure_c_ses,
             host_c_oses: accountData.host_c_oses,

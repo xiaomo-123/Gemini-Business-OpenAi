@@ -1,5 +1,33 @@
 credentials:
-  account: 'admin'
+  account: admin
   password: '123456'
 defaultDomain: '@artpayaws.site'
-emailApiUrl: 'https://artpayaws.site'
+emailApiUrl: https://artpayaws.site
+accounts:
+  parent:
+    accountId: 1
+    email: admin@artpayaws.site
+    name: admin
+    status: 0
+    latestEmailTime: null
+    createTime: '2025-12-04 11:14:14'
+    userId: 1
+    isDel: 0
+  children:
+    - accountId: 5
+      email: S0VwXR2Tsavn0PX@artpayaws.site
+      name: S0VwXR2Tsavn0PX
+      status: 0
+      latestEmailTime: null
+      createTime: '2025-12-05 12:32:25'
+      userId: 1
+      isDel: 0
+    - accountId: 6
+      email: vJkzBCqx1oMwwaz@artpayaws.site
+      name: vJkzBCqx1oMwwaz
+      status: 0
+      latestEmailTime: null
+      createTime: '2025-12-05 12:32:37'
+      userId: 1
+      isDel: 0
+  lastUpdated: '2025-12-05T12:32:41.708Z'

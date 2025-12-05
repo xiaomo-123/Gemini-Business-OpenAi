@@ -119,11 +119,12 @@ async function deleteAccount(accountId, adminToken, poolUrl) {
  */
 async function cleanInvalidAccounts() {
     try {
-        console.log('正在读取配置...');
+        
         const config = loadGeminiMailConfig();
-        const poolUrl = config.poolApiUrl || 'https://mgs.ccode.vip';
+        const poolUrl = config.poolApiUrl;
         const password = config.password;
-
+        console.log('正在读取配置...', poolUrl);
+        console.log('正在读取配置...', password);
         if (!password) {
             throw new Error('gemini-mail.yaml 中未配置密码');
         }
@@ -180,3 +181,4 @@ async function cleanInvalidAccounts() {
 }
 
 module.exports = cleanInvalidAccounts;
+
