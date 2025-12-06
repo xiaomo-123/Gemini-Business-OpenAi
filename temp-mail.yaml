@@ -94,4 +94,12 @@ accounts:
       createTime: '2025-12-06 01:28:30'
       userId: 1
       isDel: 0
-  lastUpdated: '2025-12-06T01:28:30.762Z'
+    - accountId: 15
+      email: FouRdWmqB1CsI83@artpayaws.site
+      name: FouRdWmqB1CsI83
+      status: 0
+      latestEmailTime: null
+      createTime: '2025-12-06 07:11:27'
+      userId: 1
+      isDel: 0
+  lastUpdated: '2025-12-06T07:11:27.394Z'
