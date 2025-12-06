@@ -181,4 +181,3 @@ async function cleanInvalidAccounts() {
 }
 
 module.exports = cleanInvalidAccounts;
-

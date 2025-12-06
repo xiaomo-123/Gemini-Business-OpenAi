@@ -100,10 +100,67 @@ function updateChildToken(email, tokens) {
     });
 }
 
+/**
+ * 获取代理配置
+ */
+function getProxyConfig() {
+    const PROXY_CONFIG_PATH = path.resolve(__dirname, "../../proxy.yaml");
+
+    // 如果代理配置文件不存在，返回默认禁用状态
+    if (!fs.existsSync(PROXY_CONFIG_PATH)) {
+        return {
+            enabled: false,
+            type: 'http',
+            url: '127.0.0.1',
+            port: 8080,
+            username: '',
+            password: ''
+        };
+    }
+
+    try {
+        const proxyConfig = yaml.load(fs.readFileSync(PROXY_CONFIG_PATH, "utf8")) || {};
+
+        // 如果没有proxy配置，返回默认禁用状态
+        if (!proxyConfig.proxy) {
+            return {
+                enabled: false,
+                type: 'http',
+                url: '127.0.0.1',
+                port: 8080,
+                username: '',
+                password: ''
+            };
+        }
+
+        // 返回配置的代理设置，确保所有字段都有默认值
+        return {
+            enabled: proxyConfig.proxy.enabled || false,
+            type: proxyConfig.proxy.type || 'http',
+            url: proxyConfig.proxy.url || '127.0.0.1',
+            port: proxyConfig.proxy.port || 8080,
+            username: proxyConfig.proxy.username || '',
+            password: proxyConfig.proxy.password || ''
+        };
+    } catch (error) {
+        console.error(`读取代理配置文件出错: ${error.message}`);
+        // 出错时返回默认禁用状态
+        return {
+            enabled: false,
+            type: 'http',
+            url: '127.0.0.1',
+            port: 8080,
+            username: '',
+            password: ''
+        };
+    }
+}
+
 module.exports = {
     loadGeminiConfig,
     getGeminiParentAccount,
     getGeminiChildrenAccounts,
     persistGeminiAccounts,
     updateChildToken,
+    getProxyConfig,
 };

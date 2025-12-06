@@ -59,3 +59,7 @@ if (require.main === module) {
         .catch(err => console.error('清理失败:', err.message));
 }
 node cleanInvalidAccounts.js
+
+util/gemini/autoRefresh.js文件中的loginGeminiChild
+node testProxy.js
+curl -x http://10612568jK-zone-custom-sessid-UpUCGo3o:PelENhew@us.922s5.net:6300 https://httpbin.org/ip
