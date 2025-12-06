@@ -409,22 +409,78 @@ async function loginGeminiChild(childAccount, token) {
 
         console.log(`   ✓ 验证完成，等待页面跳转...`);
         
-        // 10. 等待页面跳转到 Gemini Business 主页（可能需要多次跳转）
-        console.log(`   ⏳ 等待页面完全加载（最多60秒）...`);
+        // 等待页面跳转，处理两种情况：先出现/create然后出现/cid/，或直接出现/cid/
+        console.log(`   ⏳ 等待页面跳转（最多120秒）...`);
         
-        // 等待 URL 包含 /cid/ 路径（表示已经到达聊天页面）
-        const maxWaitTime = 60000; // 60秒
+        const maxWaitTime = 60000; // 120秒
         const startTime = Date.now();
         let currentUrl = page.url();
+        let hasSeenCreate = currentUrl.includes('/admin/create');
         
-        while (!currentUrl.includes('/cid/') && (Date.now() - startTime) < maxWaitTime) {
+        while ((!currentUrl.includes('/cid/') || currentUrl.includes('/admin/create')) && (Date.now() - startTime) < maxWaitTime) {
             console.log(`      当前 URL: ${currentUrl}`);
-            console.log(`      等待跳转到聊天页面...`);
+            
+            if (currentUrl.includes('/create')) {
+                console.log(`      检测到URL包含/create，等待跳转...`);
+                hasSeenCreate = true;
+                break;
+            } else if (currentUrl.includes('/cid/')) {
+                hasSeenCreate = false;
+                console.log(`URL包含/cid/，等待跳转...`);
+                break;
+
+            } else {
+                console.log(`      未知页面...`);
+            }
+            
             await new Promise(resolve => setTimeout(resolve, 3000));
             currentUrl = page.url();
         }
         
-        // 再等待一段时间确保页面完全加载
+        if (currentUrl.includes('/admin/create')) {
+            console.log(`   ⚠️ 等待超时，URL仍包含/create，停止执行`);    
+        
+        // 11. 填入名称
+        console.log(`   ⏳ 填入名称...`);
+        const nameSelector = '#mat-input-0';
+        await page.waitForSelector(nameSelector);
+        await page.type(nameSelector, childAccount.email);
+        await new Promise(resolve => setTimeout(resolve, 3000));
+       // 9. 点击按钮
+        console.log(`   ⏳ 点击按钮...`);
+        // const button = await page.locator('xpath=/html/body/saasfe-root/main/saasfe-onboard-component/div/div/div/form/button/span[2]');
+        // await button.waitFor();
+        // await button.click();
+        const ButtonSelector = 'body > saasfe-root > main > saasfe-onboard-component > div > div > div > form > button > span.mdc-button__label';
+        await page.click(ButtonSelector)
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        const startTime1 = Date.now();
+        let currentUrl1 = page.url();
+        
+        while (!currentUrl1.includes('/cid/') && (Date.now() - startTime1) < maxWaitTime) {
+            console.log(`      当前 URL: ${currentUrl1}`);
+            console.log(`      等待跳转到聊天页面...`);
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            currentUrl = page.url();
+        }
+         // 再等待一段时间确保页面完全加载
+        console.log(`   ⏳ 页面已跳转，等待完全加载（10秒）...`);
+        await new Promise(resolve => setTimeout(resolve, 10000));
+
+        // 11. 获取 4 个 token
+        console.log(`   ⏳ 获取 token...`);
+        
+            try {
+                const tokens = await getLoginTokens(page);
+                // 使用获取到的 tokens 进行后续操作
+                console.log('获取到的 tokens:', tokens);
+                return tokens;
+            } catch (error) {
+                console.error('获取 tokens 失败:', error.message);
+                // 处理错误情况
+            }
+    }else{
+         // 再等待一段时间确保页面完全加载
         console.log(`   ⏳ 页面已跳转，等待完全加载（10秒）...`);
         await new Promise(resolve => setTimeout(resolve, 10000));
 
@@ -432,46 +488,21 @@ async function loginGeminiChild(childAccount, token) {
         console.log(`   ⏳ 获取 token...`);
         
         // 获取所有 cookies
-        const cookies = await page.cookies();
         
-        // 从 cookies 中提取需要的值
-        const secure_c_ses = cookies.find(c => c.name === '__Secure-C_SES')?.value || null;
-        const host_c_oses = cookies.find(c => c.name === '__Host-C_OSES')?.value || '';
-        
-        // 从 URL 中提取 csesidx 和 team_id (config_id)
-        currentUrl = page.url();
-        const urlParams = new URLSearchParams(new URL(currentUrl).search);
-        const csesidx = urlParams.get('csesidx') || null;
-        
-        // 从 URL 路径中提取 team_id (在 /cid/ 后面)
-        const pathMatch = currentUrl.match(/\/cid\/([^/?]+)/);
-        const team_id = pathMatch ? pathMatch[1] : null;
+        // 调用示例
+            try {
+                const tokens = await getLoginTokens(page);
+                // 使用获取到的 tokens 进行后续操作
+                console.log('获取到的 tokens:', tokens);
+                return tokens;
+            } catch (error) {
+                console.error('获取 tokens 失败:', error.message);
+                // 处理错误情况
+            }
+    }
+       
 
-        // 验证是否获取到所有必需的 token
-        if (!secure_c_ses || !csesidx || !team_id) {
-            console.log(`   ⚠️  Token 获取不完整:`);
-            console.log(`      secure_c_ses: ${secure_c_ses ? '✓' : '✗'}`);
-            console.log(`      csesidx: ${csesidx ? '✓' : '✗'}`);
-            console.log(`      team_id: ${team_id ? '✓' : '✗'}`);
-            console.log(`      host_c_oses: ${host_c_oses ? '✓' : '✗'}`);
-            console.log(`      当前 URL: ${currentUrl}`);
-            throw new Error('Token 获取不完整，请检查登录流程');
-        }
-
-        const tokens = {
-            csesidx: csesidx,
-            host_c_oses: host_c_oses,
-            secure_c_ses: secure_c_ses,
-            team_id: team_id,
-        };
-
-        console.log(`   ✓ 登录成功，获取到 4 个 token`);
-        console.log(`      csesidx: ${csesidx.substring(0, 20)}...`);
-        console.log(`      team_id: ${team_id}`);
-        console.log(`      secure_c_ses: ${secure_c_ses.substring(0, 20)}...`);
-        console.log(`      host_c_oses: ${host_c_oses ? host_c_oses.substring(0, 20) + '...' : '(空)'}`);
         
-        return tokens;
 
     } catch (error) {
         console.error(`   ❌ 登录过程出错: ${error.message}`);
@@ -481,6 +512,56 @@ async function loginGeminiChild(childAccount, token) {
             await browser.close();
         }
     }
+}
+/**
+ * 获取登录后的 tokens
+ * @param {Object} page - Puppeteer 页面对象
+ * @returns {Promise<Object>} 包含 tokens 的对象
+ */
+async function getLoginTokens(page) {
+    console.log(`   ⏳ 获取 token...`);
+    
+    // 获取所有 cookies
+    const cookies = await page.cookies();
+    
+    // 从 cookies 中提取需要的值
+    const secure_c_ses = cookies.find(c => c.name === '__Secure-C_SES')?.value || null;
+    const host_c_oses = cookies.find(c => c.name === '__Host-C_OSES')?.value || '';
+    
+    // 从 URL 中提取 csesidx 和 team_id (config_id)
+    const currentUrl = page.url();
+    const urlParams = new URLSearchParams(new URL(currentUrl).search);
+    const csesidx = urlParams.get('csesidx') || null;
+    
+    // 从 URL 路径中提取 team_id (在 /cid/ 后面)
+    const pathMatch = currentUrl.match(/\/cid\/([^/?]+)/);
+    const team_id = pathMatch ? pathMatch[1] : null;
+
+    // 验证是否获取到所有必需的 token
+    if (!secure_c_ses || !csesidx || !team_id) {
+        console.log(`   ⚠️  Token 获取不完整:`);
+        console.log(`      secure_c_ses: ${secure_c_ses ? '✓' : '✗'}`);
+        console.log(`      csesidx: ${csesidx ? '✓' : '✗'}`);
+        console.log(`      team_id: ${team_id ? '✓' : '✗'}`);
+        console.log(`      host_c_oses: ${host_c_oses ? '✓' : '✗'}`);
+        console.log(`      当前 URL: ${currentUrl}`);
+        throw new Error('Token 获取不完整，请检查登录流程');
+    }
+
+    const tokens = {
+        csesidx: csesidx,
+        host_c_oses: host_c_oses,
+        secure_c_ses: secure_c_ses,
+        team_id: team_id,
+    };
+
+    console.log(`   ✓ 登录成功，获取到 4 个 token`);
+    console.log(`      csesidx: ${csesidx.substring(0, 20)}...`);
+    console.log(`      team_id: ${team_id}`);
+    console.log(`      secure_c_ses: ${secure_c_ses.substring(0, 20)}...`);
+    console.log(`      host_c_oses: ${host_c_oses ? host_c_oses.substring(0, 20) + '...' : '(空)'}`);
+    
+    return tokens;
 }
 
 /**

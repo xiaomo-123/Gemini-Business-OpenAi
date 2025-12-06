@@ -11,39 +11,17 @@ accounts:
     userId: 1
     isDel: 0
   children:
-    - accountId: 10
-      email: S2r8ARUxuKO1Q0s@artpayaws.site
-      name: S2r8ARUxuKO1Q0s
+    - accountId: 17
+      email: oIZZFlnY1xLl8ql@artpayaws.site
+      name: oIZZFlnY1xLl8ql
       status: 0
       latestEmailTime: null
-      createTime: '2025-12-06 01:28:19'
-      userId: 1
-      isDel: 0
-    - accountId: 11
-      email: RJv1uUVZJgnkssR@artpayaws.site
-      name: RJv1uUVZJgnkssR
-      status: 0
-      latestEmailTime: null
-      createTime: '2025-12-06 01:28:22'
+      createTime: '2025-12-06 09:52:03'
       userId: 1
       isDel: 0
       tokens:
-        csesidx: '578816627'
-        host_c_oses: COS.AfQtEyCr2Jos5UBlR-deH-UKCbS8kv-j--38DCUA3vu2dMtzTsmHYvRE_JronqvnbTgfDzS7LQj2AEXJn9uqYZlXRSHcUpY0K9c_dWBEWOtwhSi2rUx23UGoreJXL1FkiDq05L-DSl53Ai_c
-        secure_c_ses: CSE.AdwtfTDzTpHMCghuiKatHmvg3RBDXc8f7bE8SwTFY4QtyyToFdmfc5wBOKXL0HwOaF6x8upB5LzJyg-ixiSgiXJgk_m1sSR0a0-5dtl1YsQM0UOtsua026SNzvt_eGdNlDYxx9iv6DL3TiCL96byyXlv7flnFqHn2Gl4BL-o9FKGesRx-1AOLWCK2y_U-kITL6a2JrzFHtOYkASm4mDJlN5qwAiy_C0_fxZXmEY3RxsloVP82ImPlGO_WeMnccOH_c_NrykUBvVFSFkGEZqkJwX1bofSzmvSV3bAD6ymCuuzEk-x6-j9iANjIueeDJeJSwjrNMk-4qTEJPolmJxrWLR54BIQoioFvFyy11unZwe6tfedtJfcnyDt48GZmZbBCCqKVaDVbDb2Nqw6cNypScvmuxLxFzkXEPCjj_rcYmR-cgohytMNnUojqa6CNeGc7F_1zM1LEPfHDTma
-        team_id: 27f58a43-aa91-4992-8a5f-ffbe2d96eae8
-      lastUpdated: '2025-12-06T07:14:46.220Z'
-    - accountId: 12
-      email: bFOiH2W3DohEFPT@artpayaws.site
-      name: bFOiH2W3DohEFPT
-      status: 0
-      latestEmailTime: null
-      createTime: '2025-12-06 01:28:25'
-      userId: 1
-      isDel: 0
-      tokens:
-        csesidx: '1166053803'
-        host_c_oses: COS.AfQtEyD2eG7bq-_YRVx8V0NERsHvY17q2kSSzBBcmR3fKw-FFNvssXmg6rRlstC0Wyp-7yeti_b4PTLCyQ52piXMD2NYcXefCj-xt_ZjUEHZMGOMWO9nY3DP7H6ZcSAxzlsID4JgTyajFgI0
-        secure_c_ses: CSE.AdwtfTAyZjilSumOB-k9K8ZKhCGazaWkVLH3t28jyc90z2yMp-g7OX9Cb7OIyRZlQzngMcPh6bJvU8pjGnj-X9NEMgYGQk_nN7V6nt-tKTYxj8KqdzKhmqqr0burzMRB-z3y2WJmKKFraWSJbbp0elua65YjsHkDZrPsndbc1wt6eldc2KpO5neuk9WFJPab3e95GTRAU5q5a4FRcfyifLuRefWKJUEGDp53rc2KBTbOaJQPyM8Y3MKAJTVStqScd2KOcDeBXo_RShAuPB3NkOwjMTMFz7ySwyApRrctpmsCXUG0MOEB5ydZO9FO0syzvY-7E7OYq5QMMi59fgL4I52RtyGlOWqdO7nSRf3oYA_UtKkAmW2LCdQY-Ww6Lln-BQITP9mivj1sgiJkS__IyG80-E0ZhjsjyJmH88OM5blO1mIuCjY6CKnMIvT0Qie4sK7jyaWDdlgd9W7m
-        team_id: 360ebe6d-2840-4f9e-992b-95199d4a6a4a
-      lastUpdated: '2025-12-06T07:16:20.748Z'
+        csesidx: '1873786893'
+        host_c_oses: COS.AQH81rjg6W2soF1eF0xdVMHnI7myOvaVw359hv7K7UjCPEHshNc8qTwk08c7zoI8k9ePV85OMcALh4ruEYWZbHC_IKfRORL1_PX1x0eJg5MfMVUTFDANJ12HMKmx0K8mcxONwsKfvXyCid2I
+        secure_c_ses: CSE.ARsLs01YM6LcnMwXVOJ4AbyQ_2bN8drMxA4qifzlJxVOFBeMdYd0JUtNR0yU7q7rK0RUskvhd3KaNMvHBYMgZ3H0CCgOI7TjGSn6yyZlO0Pbc7oP7NATdFKRQ6kUYBAf3S2SfvVn-bG1T8bPSAgpkKRRPHecnT61Mv5yBrQ1WbzwbK_Pd2RqDVp61XsSAL5OoS5Q-sdQtyHnE8iBZnNwC0lBKUEY8Op6x129AWZWE0X4ofXmd0ukm1uYmpJ2aKmBYYV53HwvA8SBIHaO_ocKLmfKwBr76DNshH3VtAW08baeoRFXYDibXsrcpX0KQvmSHpjDqSk7LMz25o8gsaSiubJ4P_TWgDkNV57qrNOcAG0sK2LKR7GktxBH1AWjdpqdj0yL9kxQ4P-OTNLdYkBN2xSbQw4jC8JJp1OpKzsReoBXc--UpjgEaF-dwuXSWy9Dus7WnbVaCmEvsw
+        team_id: 5a85c5e3-e3e1-4b0b-95a8-a5a182f94822
+      lastUpdated: '2025-12-06T10:21:32.413Z'

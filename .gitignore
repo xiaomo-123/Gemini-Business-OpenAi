@@ -4,7 +4,7 @@ node_modules
 
 yarn.lock
 package-lock.json
-
+proxy copy.yaml
 # Build outputs
 dist
 build
