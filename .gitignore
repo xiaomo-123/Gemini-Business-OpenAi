@@ -1,7 +1,7 @@
 # Dependencies
 node_modules
-1.bat
-2.bat
+*.bat
+
 yarn.lock
 package-lock.json
 
